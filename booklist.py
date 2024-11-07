@@ -2,61 +2,64 @@ import os
 from book import Book
 
 class BookList:
-    """
-    This is the BookList class. It is the outer class of the Node class. This class has one instance variable and the following methods: default constructor, addToStart,
-    storeRecordsByYear, countNodes, insertBefore, insertBetween, displayContent, reverseList, delConsecutiveRepeatedRecords, extractAuthList, swap and commit.
-    """
+    """ this is the booklist class. it is the outer class of the node class. this class has two instance variable and several methods. """
+    file_path: str = 'files'
 
-    # inner Node class of BookList
+    # inner node class of booklist
     class Node:
-        """
-        This is the Node class for a linked list of Book objects, it is an inner class of the BookList class. This class has two variables, one of type Book and
-        the other of type Node and the following methods: default constructor, parameterized constructor, getters and setters, and equals.
-        """
-        def __init__(self, b=Book(), next=None):
+        """ this is the inner node class for a linked list of book objects. this class has two variables, one of type book and the other of type node and several methods. """
+        
+        def __init__(self, book=Book(), next=None):
             """
-            This is the constructor for the Node class
-            :param b: the Book object to be stored in the node
-            :param next: the next node in the list
+            this is the class constructor.
+
+            parameters:
+                b: the book object to be stored in the node
+                next: the next node in the list
+
+            returns: None
             """
-            self.b = b
-            self.next = next
+            self.set_book(book)
+            self.set_next(next)
 
         # accessor methods
-        def getB(self) -> Book:
-            return self.b
-        def getNext(self):
+        def get_book(self) -> Book:
+            return self.book
+        def get_next(self) -> 'BookList.Node':
             return self.next
 
         # mutator methods
-        def setB(self, b) -> None:
-            self.b = Book(b)
-        def setNext(self, next) -> None:
+        def set_book(self, book) -> None:
+            self.book = Book(book)
+        def set_next(self, next) -> None:
             self.next = next
-
+        
         # equals
         def __eq__(self, obj) -> bool:
             """
-            The equals method that checks if two nodes are equal in terms of class and instance variables
-            :param obj: object being compared to
-            :return: true if two nodes are of the same class and have equal values of all class attributes, otherwise false
+            this method checks if two nodes are equal in terms of class and instance variables.
+
+            parameters:
+                obj: another object
+            
+            returns: true if two nodes are equal, otherwise false
             """
             if not isinstance(obj, BookList.Node):
                 return False
-            return self.b == obj.b and object.__eq__(self.next, obj.next)
-
-    # default & parameterized constructors
+            return self.book == obj.book and object.__eq__(self.next, obj.next)
+    
     def __init__(self):
-        """
-        This is the constructor to initialize the head of the linked list
-        """
+        """ this constructor initializes the head of the linked list. """
         self.head: BookList.Node = None
 
-    def addToStart(self, book: Book) -> None:
+    def add_to_start(self, book: Book=Book()) -> None:
         """
-        This method adds a Book object to the start of the list
-        :param book: the Book object to be added to the list
-        :return: None
+        this method adds a book object to the start of the list.
+
+        parameters:
+            book: the book object to be added to the list
+        
+        returns: None
         """
         temp = self.Node(book, self.head)
 
@@ -64,261 +67,314 @@ class BookList:
             self.head = temp
             self.head.next = self.head
         else:
-            self.getLastNode().next = temp
+            self.get_last_node().next = temp
             self.head = temp
 
-    def storeRecordsByYear(self, year: int) -> None:
+    def store_records_by_year(self, year: int) -> None:
         """
-        This method finds all the book records with the year equal to the passed yr value, and stores them in its year file ie yr.txt.
-        :param year: the target year being sought
-        :return: None
+        this method finds all the book records with the year equal to the passed year value, and stores them in its year file ie `{year}`.txt.
+        
+        parameters:
+            year: the sought year
+        
+        returns: None
         """
         temp = self.head
-        numOfNodes: int = self.countNodes()
-        yearFound: bool = False
+        num_of_nodes: int = self.count_nodes()
+        year_found: bool = False
 
-        if numOfNodes == 0:
+        if num_of_nodes == 0:
             print("-> This list is empty... There exists no such year!")
-        else:
-            if os.path.exists(f"mytextfiles/{year}.txt"):
-                os.remove(f"mytextfiles/{year}.txt")
-            for _ in range(numOfNodes):
-                if temp.b.getYear() == year:
-                    self.openWriter(f"mytextfiles/{year}.txt", str(temp.getB()))
-                    yearFound = True
-                temp = temp.next
+            return
+        
+        if os.path.exists(f"{self.file_path}/{year}.txt"):
+            os.remove(f"{self.file_path}/{year}.txt") 
+            
+        # traverse the list to find the desired year
+        for _ in range(num_of_nodes):
+            if temp.get_book().get_year() == year:
+                self.open_writer(f"{self.file_path}/{year}.txt", str(temp.get_book()))
+                year_found = True
+            temp = temp.next
 
-        if yearFound:
-            print(f"-> Book records with {year} as its year were found and stored in its {year}.txt file.")
+        if year_found:
+            print(f"-> Book records with year {year} were found and stored in the {year}.txt file.")
         else:
-            self.deleteFile(f"mytextfiles/{year}.txt")
             print("-> No books records with such year was found.")
 
-    def insertBefore(self, isbn: str, book: Book) -> bool:
+    def insert_before(self, isbn: str, book: Book) -> bool:
         """
-        This method searches the list for the first occurrence of a Node holding a Book object that has an ISBN equal to the passed isbn value. If such node is found,
-        the method will insert a new Node in the list (holding Book b) before that node and return true; otherwise it does nothing and returns false.
-        :param isbn: the target isbn being sought
-        :param book: the Book object to be inserted into the list
-        :return: true if a node has a book record with an isbn equal to the passed isbn value is found, otherwise false
+        this method searches the list for the first occurrence of a node holding a book object that has an isbn equal to the passed isbn. 
+        
+        if such node is found, the method will insert a new node before the found node, and return true; otherwise it does nothing and returns false.
+        
+        parameters:
+            isbn: the sought isbn
+            book: the book object to be inserted into the list
+        
+        returns: true if a node has a book record with the passed isbn, otherwise false
         """
         temp = self.head
-        numOfNodes: int = self.countNodes()
-        lastNode: Node = self.getLastNode()
+        num_of_nodes: int = self.count_nodes()
+        last_node: BookList.Node = self.get_last_node()
 
-        if numOfNodes == 0:
+        if num_of_nodes == 0:
             print("-> This list is empty... There exists no such isbn!")
-        else:
-            if temp.b.getIsbn() == isbn:
-                lastNode.next = self.Node(book, self.head)
-                return True
-            else:
-                while temp.next.b.getIsbn() != isbn and temp.next != self.head:
-                    temp = temp.next
-                if temp.next == self.head:
-                    return False
+            return False
+        
+        # check if the head has the desired isbn
+        if self.head.get_book().get_isbn() == isbn:
+            last_node.next = self.Node(book, self.head)
+            return True
+            
+        # traverse the list to find the desired isbn
+        while temp.next != self.head:
+            if temp.next.get_book().get_isbn() == isbn:
                 temp.next = self.Node(book, temp.next)
                 return True
+                
+            temp = temp.next
+
         return False
 
-    def insertBetween(self, isbn1: str, isbn2: str, book: Book) -> bool:
+    def insert_between(self, isbn1: str, isbn2: str, book: Book) -> bool:
         """
-        This method searches the list for the first occurrence of the first two consecutive nodes holding a Book object with ISBN values equal to isbn1 and isbn2
-        respectively. If such node is found, the method will insert a new Node in the list (holding Book b) in between these two nodes and return true;
-        otherwise nothing is inserted and returns false.
-        :param isbn1: the first target isbn being sought
-        :param isbn2: the second target isbn being sought
-        :param book: the Book object to be inserted into the list
-        :return: true if two consecutive nodes have book records with isbn values equal to the two passed isbn values respectively are found, otherwise false
+        this method searches the list for the first occurrence of two consecutive nodes holding a book object with isbn values equal to isbn1 and isbn2 respectively.
+        
+        if such nodes are found, the method will insert a new node in between the found nodes and return true; otherwise nothing is inserted and returns false.
+        
+        parameters:
+            isbn1: the first sought isbn
+            isbn2: the second sought isbn
+            book: the book object to be inserted into the list
+        
+        returns: true if two consecutive nodes having book records with the passed isbn values are found, otherwise false
         """
         temp = self.head
-        numOfNodes: int = self.countNodes()
-        lastNode: Node = self.getLastNode()
+        num_of_nodes: int = self.count_nodes()
+        last_node: BookList.Node = self.get_last_node()
 
-        if numOfNodes < 2:
+        if num_of_nodes < 2:
             print("-> This list is either empty or there's only one book object, therefore nothing can be inserted between...")
             return False
-        if lastNode.b.getIsbn() == isbn1 and temp.b.getIsbn() == isbn2:
-            lastNode.next = self.Node(book, self.head)
+        
+        # if the last node and head have the desired isbn values
+        if last_node.get_book().get_isbn() == isbn1 and self.head.get_book().get_isbn() == isbn2:
+            last_node.next = self.Node(book, self.head)
             return True
-        else:
-            for _ in range(numOfNodes):
-                if temp.b.getIsbn() == isbn1 and temp.next.b.getIsbn() == isbn2:
-                    toAdd = self.Node(book, temp.next)
-                    temp.next = toAdd
+        
+        # traverse the list to find the desired isbn values
+        for _ in range(num_of_nodes):
+            if temp.get_book().get_isbn() == isbn1 and temp.next.get_book().get_isbn() == isbn2:
+                temp.next = self.Node(book, temp.next)
+                return True
+        
         return False
 
-    def displayContent(self) -> None:
+    def display_content(self) -> None:
         """
-        This method displays the records of the linked-list
-        :return: None
+        this method displays the linked-list records.
+        
+        returns: None
         """
         temp = self.head
-        numOfNodes: int = self.countNodes()
+        num_of_nodes: int = self.count_nodes()
 
-        if numOfNodes == 0:
+        if num_of_nodes == 0:
             print("-> This list is empty... There is nothing to display!")
-        else:
-            print("------------------------------------------------------------------------")
-            for _ in range(numOfNodes):
-                print(f"{temp.b} ==>")
-                temp = temp.next
-            if temp == self.head:
-                print("===> head")
+            return
+        
+        print("------------------------------------------------------------------------")
+        for _ in range(num_of_nodes):
+            print(f"{temp.get_book()} ==>")
+            temp = temp.next
 
-    def delConsecutiveRepeatedRecords(self) -> bool:
+        # confirm end of list
+        if temp == self.head:
+            print("===> head")
+
+    def delete_consecutive_records(self) -> bool:
         """
-        This method searches the list, deleting all consecutive repeated nodes, each having the same Book record, if any. If a record appears
-        again in the list, but at a non-consecutive node, the method will not concern itself with it.
-        :return: true if all consecutive repeated nodes are found and deleted, otherwise false
+        this method traverses the list, deleting all consecutive repeated nodes, each having the same book records, if any.
+        
+        returns: true if all consecutive repeated nodes are found and deleted, otherwise false
         """
         temp = self.head
-        numOfNodes: int = self.countNodes()
-        lastNode: Node = self.getLastNode()
-        deleteConsecutive: bool = False
+        num_of_nodes: int = self.count_nodes()
+        last_node: BookList.Node = self.get_last_node()
+        is_deleted: bool = False
 
-        if numOfNodes < 2:
+        if num_of_nodes < 2:
             print("-> This list is either empty or there's only one book object...")
             return False
-        else:
-            if lastNode.getB() == self.head.getB():
-                self.head = self.head.next
-            for _ in range(numOfNodes):
-                if temp.getB() == temp.next.getB():
-                    while temp.getB() == temp.next.getB():
-                        temp.next = temp.next.next
-                        deleteConsecutive = True
-                temp = temp.next
-        return deleteConsecutive
+        
+        # if the last node and head have the same book record
+        if last_node.get_book() == self.head.get_book():
+            self.head = self.head.next
+        
+        # traverse the list to find consecutive repeated nodes and delete them
+        for _ in range(num_of_nodes):
+            if temp.get_book() == temp.next.get_book():
+                while temp.get_book() == temp.next.get_book():
+                    temp.next = temp.next.next
+                    is_deleted = True
+            
+            temp = temp.next
 
-    def extractAuthList(self, author: str):
+        return is_deleted
+
+    def extract_author_list(self, author: str) -> 'BookList':
         """
-        This method searches the list for occurrences of Nodes holding a Book object that has an author equal to the passed aut value. If such nodes are found,
-        the method will create a new singular circular list that includes only the records of that author.
-        :param author: the target author being sought
-        :return: a new singular circular list that includes only the records of the passed aut value
+        this method searches the list for nodes holding a book object that has an author equal to the passed author. 
+        
+        if such nodes are found, the method will create a new singular circular list that includes only the records of that author.
+        
+        parameters:
+            author: the sought author
+        
+        returns: a new circular booklist with only the book records containing the passed author
         """
         temp = self.head
-        numOfNodes: int = self.countNodes()
-        authorList = BookList()
-        authorFound: bool = False
+        num_of_nodes: int = self.count_nodes()
+        author_list = BookList()
+        author_found: bool = False
 
-        if numOfNodes == 0:
+        if num_of_nodes == 0:
             print("-> This list is empty... There is no author to extract!")
+            return author_list
+        
+        for _ in range(num_of_nodes):
+            if temp.get_book().get_author() == author:
+                author_list.add_to_start(temp.get_book())
+                author_found = True
+            temp = temp.next
+        
+        if author_found:
+            print(f"-> Contents of the newly-created author's list for {author};")
         else:
-            for _ in range(numOfNodes):
-                if temp.b.getAuthor() == author:
-                    authorList.addToStart(temp.getB())
-                    authorFound = True
-                temp = temp.next
-            if authorFound:
-                print(f"-> Contents of the newly-created author's list for {author};")
-            else:
-                print("-> No books record(s) with such author was found.")
-        return authorList
+            print("-> No books record(s) with such author was found.")
+        
+        return author_list
 
-    def swap(self, isbn1: str, isbn2: str) -> bool:
+    def swap_nodes(self, isbn1: str, isbn2: str) -> bool:
         """
-        This method searches the list for the occurrence of the first pair of nodes holding Book objects with ISBN values equal to isbn1 and isbn2 respectively. If
-        such nodes are found, the method swaps the two nodes, and return true; If any of these ISBN does not exist, nothing is swapped and returns false.
-        :param isbn1: the first target isbn being sought
-        :param isbn2: the second target isbn being sought
-        :return: true if two nodes have book records with isbn values equal to the two passed isbn values respectively are found and swapped, otherwise false
+        this method traverses the list for the occurrence of the first pair of nodes holding book objects with isbn values equal to isbn1 and isbn2 respectively. 
+        
+        if such nodes are found, the method swaps the nodes, and return true; if any of these isbn are not found, nothing is swapped and returns false.
+        
+        parameters:
+            isbn1: the first sought isbn
+            isbn2: the second sought isbn
+        
+        returns: true if two nodes having book records with the passed isbn values are found and swapped, otherwise false
         """
         temp = curr = self.head
-        numOfNodes: int = self.countNodes()
+        num_of_nodes: int = self.count_nodes()
         book1 = book2 = Book()
-        swapped1 = swapped2 = False
+        swap1 = swap2 = False
 
-        if numOfNodes < 2:
+        if num_of_nodes < 2:
             print("-> This list is either empty or there's only one book object, therefore nothing can be swapped...")
             return False
-        else:
-            for _ in range(numOfNodes):
-                if temp.b.getIsbn() == isbn1:
-                    book1 = temp.getB()
-                    swapped1 = True
-                    break
-            for _ in range(numOfNodes):
-                if curr.b.getIsbn() == isbn2:
-                    book2 = curr.getB()
-                    swapped2 = True
-                    break
-            if swapped1 and swapped2:
-                temp.setB(book2)
-                curr.setB(book1)
-                return True
-            return False
+        
+        for _ in range(num_of_nodes):
+            if temp.get_book().get_isbn() == isbn1:
+                book1 = temp.get_book()
+                swap1 = True
+                break
+        for _ in range(num_of_nodes):
+            if curr.get_book().get_isbn() == isbn2:
+                book2 = curr.get_book()
+                swap2 = True
+                break
+        
+        if swap1 and swap2:
+            temp.set_book(book2)
+            curr.set_book(book1)
+            return True
+        
+        return False
 
     def commit(self) -> None:
         """
-        This method commits the contents of the list at the time of its call by storing the contents of the list in a file called "Update_Books.txt".
-        :return: None
+        this method commits a list by storing its contents in a file called `{commit.txt}`.
+        
+        returns: None
         """
+        file_name: str = 'commit.txt'
         temp = self.head
-        numOfNodes: int = self.countNodes()
+        num_of_nodes: int = self.count_nodes()
 
-        if numOfNodes == 0:
+        if num_of_nodes == 0:
             print("-> This list is empty... There is nothing to commit!")
-        else:
-            try:
-                for _ in range(numOfNodes):
-                    self.openWriter("mytextfiles/Update_Books.txt", str(temp.getB()))
-                    temp = temp.next
+            return
+        
+        try:
+            for _ in range(num_of_nodes):
+                self.open_writer(f"{self.file_path}/{file_name}", str(temp.get_book()))
+                temp = temp.next
 
-                print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                print("The records of this list have been committed to Update_Books.txt")
-                print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-            except FileNotFoundError:
-                print("-> 'mytextfiles/Update_Books.txt' file not found for committing.")
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            print(f"The records of this list have been committed to `{file_name}`")
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        except FileNotFoundError:
+            print(f"-> '{self.file_path}/{file_name}' file not found for committing.")
 
-# ---------------------------------------------------------------- #
-    def countNodes(self) -> int:
+
+## ---------------------- HELPER FUNCTIONS  ---------------------- ##
+    def count_nodes(self) -> int:
         """
-        This method returns the number of nodes in the list ie the size of the bookList
-        :return: the number of nodes in the list
+        this method returns the number of nodes in the book list
+        
+        returns: the number of nodes in the list
         """
         temp = self.head
         if temp is None:
             return 0
 
         count = 1
-        while not temp.next == self.head:
+        while temp.next != self.head:
             count += 1
             temp = temp.next
         return count
 
-    def getLastNode(self) -> Node:
+    def get_last_node(self) -> Node:
         """
-        This method locates the last node in the list
-        :return: the reference of the last node if the list is not empty, otherwise None
+        this method returns the last node in the list.
+        
+        returns: the reference of the last node if the list is not empty, otherwise None
         """
         temp = self.head
 
         if temp is None:
             return None
-        while not temp.next == self.head:
+        while temp.next != self.head:
             temp = temp.next
         return temp
 
     @staticmethod
-    def openWriter(files: str, toWrite: str) -> None:
+    def open_writer(file: str, text: str) -> None:
         """
-        This method opens the stream for all the file objects
-        :param files: the file to write to
-        :param toWrite: the text(s) to write
-        :return: None
+        this method opens the stream for all the file objects.
+        
+        parameters:
+            file: the file to write to
+            text: the text(s) to write
+        
+        returns: None
         """
-        with open(files, 'a') as file:
-            file.write(toWrite + '\n')
+        with open(file, 'a') as f:
+            f.write(text + '\n')
 
     @staticmethod
-    def deleteFile(file: str) -> None:
+    def delete_file(file: str) -> None:
         """
-        This method deletes all the text files used in this program
-        :param file: the file to delete
-        :return: None
+        this method deletes all text files used for this program.
+        
+        parameters:
+            file: the file to delete
+        
+        returns: None
         """
         if os.path.exists(file):
             os.remove(file)
-        else: pass
