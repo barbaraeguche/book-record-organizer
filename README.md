@@ -11,7 +11,7 @@ a circular linked list system designed to efficiently organize book records, fea
 - **commit changes:** saves the updated list to a file named `commit.txt` upon command.
 - **stop talking:** terminates the conversation and exits the program.
 
-## pictures 🖼️
+## pictures 📸
   - initial run
   ![init](https://github.com/user-attachments/assets/d31b574d-8bb5-412b-b640-ec7dd6c0e5c9)
 
