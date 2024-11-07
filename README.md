@@ -12,14 +12,14 @@ a circular linked list system designed to efficiently organize book records, fea
 - **stop talking:** terminates the conversation and exits the program.
 
 ## pictures 📸
-  - initial run
+  - **initial run**
   ![init](https://github.com/user-attachments/assets/d31b574d-8bb5-412b-b640-ec7dd6c0e5c9)
 
-  - option 2
+  - **option 2**
   ![option 2](https://github.com/user-attachments/assets/951074f8-4a97-4449-ae8a-ff7e0c9396b4)
 
-  - option 3
+  - **option 3**
   ![option 3](https://github.com/user-attachments/assets/bc4da696-b9d7-4d5d-bb3e-ba29998f5ce3)
 
-  - option 5
+  - **option 5**
   ![option 5](https://github.com/user-attachments/assets/8ff2f821-db88-4d04-ba82-8a9be9a0a73c)
