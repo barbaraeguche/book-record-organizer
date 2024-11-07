@@ -15,12 +15,18 @@ a circular linked list system designed to efficiently organize book records, fea
 to get the project up and running on your local machine, follow these steps:
 
 - **ensure python is installed:** must have [python version ^3.11](https://www.python.org/downloads/) installed.
-- **clone the repository:** git clone <repository-url>
-- **navigate to the project directory:** cd <project-directory>
-- **run the project:** python3 driver.py
-
-
-(or the address shown in your console) to view the app.
+- **clone the repository:**
+```bash
+git clone https://github.com/barbaraeguche/book-record-organizer.git
+```
+- **navigate to the project directory:**
+```bash
+cd <project-directory>
+```
+- **run the project:**
+```bash
+python3 driver.py
+```
 
 ## gallery 📸
 <details>
