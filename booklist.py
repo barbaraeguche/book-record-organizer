@@ -19,8 +19,8 @@ class BookList:
 
             returns: None
             """
-            self.set_book(book)
-            self.set_next(next)
+            self.book = book
+            self.next = next
 
         # accessor methods
         def get_book(self) -> Book:
@@ -47,12 +47,12 @@ class BookList:
             if not isinstance(obj, BookList.Node):
                 return False
             return self.book == obj.book and object.__eq__(self.next, obj.next)
-    
+        
     def __init__(self):
         """ this constructor initializes the head of the linked list. """
         self.head: BookList.Node = None
 
-    def add_to_start(self, book: Book=Book()) -> None:
+    def add_to_start(self, book: Book) -> None:
         """
         this method adds a book object to the start of the list.
 

@@ -83,7 +83,7 @@ if __name__ == '__main__':
         print("\n\nTell me what you want to do? Let's chat since this is trending now! Here are the option:")
         print("\t\t1) Give me a year # and I would extract all records of that year and store them in a file for that year;")
         print("\t\t2) Ask me to delete all consecutive  records;")
-        print("\t\t3) Give me an author name and I will creatrepeatede a new list with the records of this author and display them;")
+        print("\t\t3) Give me an author name and I will create a new list with the records of this author and display them;")
         print("\t\t4) Give me an ISBN number and a Book object, and I will insert Node with the book before the record with this ISBN;")
         print("\t\t5) Give me 2 ISBN numbers and a book object, and I will insert Node between them, if I find them!")
         print("\t\t6) Give me 2 ISBN numbers and I will swap them in the list for rearrangement of records; of course if they exist!")
