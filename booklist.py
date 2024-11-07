@@ -29,8 +29,8 @@ class BookList:
             return self.next
 
         # mutator methods
-        def set_book(self, book) -> None:
-            self.book = Book(book)
+        def set_book(self, book: Book) -> None:
+            self.book = book
         def set_next(self, next) -> None:
             self.next = next
         
@@ -164,10 +164,12 @@ class BookList:
             return True
         
         # traverse the list to find the desired isbn values
-        for _ in range(num_of_nodes):
+        while temp.next != self.head:
             if temp.get_book().get_isbn() == isbn1 and temp.next.get_book().get_isbn() == isbn2:
                 temp.next = self.Node(book, temp.next)
                 return True
+            
+            temp = temp.next
         
         return False
 
@@ -277,22 +279,14 @@ class BookList:
             print("-> This list is either empty or there's only one book object, therefore nothing can be swapped...")
             return False
         
-        for _ in range(num_of_nodes):
-            if temp.get_book().get_isbn() == isbn1:
-                book1 = temp.get_book()
-                swap1 = True
-                break
-        for _ in range(num_of_nodes):
-            if curr.get_book().get_isbn() == isbn2:
-                book2 = curr.get_book()
-                swap2 = True
-                break
+        temp, book1, swap1 = self.find_isbn(temp, isbn1)
+        curr, book2, swap2 = self.find_isbn(curr, isbn2)
         
         if swap1 and swap2:
             temp.set_book(book2)
             curr.set_book(book1)
             return True
-        
+
         return False
 
     def commit(self) -> None:
@@ -324,7 +318,7 @@ class BookList:
 ## ---------------------- HELPER FUNCTIONS  ---------------------- ##
     def count_nodes(self) -> int:
         """
-        this method returns the number of nodes in the book list
+        this function returns the number of nodes in the book list
         
         returns: the number of nodes in the list
         """
@@ -340,7 +334,7 @@ class BookList:
 
     def get_last_node(self) -> Node:
         """
-        this method returns the last node in the list.
+        this function returns the last node in the list.
         
         returns: the reference of the last node if the list is not empty, otherwise None
         """
@@ -351,11 +345,30 @@ class BookList:
         while temp.next != self.head:
             temp = temp.next
         return temp
+    
+    def find_isbn(self, node: 'BookList.Node', isbn: str) -> list['BookList.Node', Book, bool]:
+        """
+        this function searches for the first occurrence of a book object with the given isbn value.
+        
+        parameters:
+            node: the node to search
+            isbn: the sought isbn value
 
+        returns: a list with the reference of the node, the book object with the given isbn value, and a boolean indicating whether the isbn was found or not
+        """
+        while node.next != self.head:
+            if node.get_book().get_isbn() == isbn:
+                book1 = node.get_book()
+                swap1 = True
+                break
+            node = node.next
+        
+        return [node, book1, swap1]
+    
     @staticmethod
     def open_writer(file: str, text: str) -> None:
         """
-        this method opens the stream for all the file objects.
+        this function opens the stream for all the file objects.
         
         parameters:
             file: the file to write to
@@ -369,7 +382,7 @@ class BookList:
     @staticmethod
     def delete_file(file: str) -> None:
         """
-        this method deletes all text files used for this program.
+        this function deletes all text files used for this program.
         
         parameters:
             file: the file to delete
