@@ -5,7 +5,7 @@ from booklist import BookList
 # ---------------------------------------------------------------- #
 def open_writer(file: str, text: str) -> None:
     """
-    this method opens the stream for all the file objects.
+    this function opens the stream for all the file objects.
         
     parameters:
         file: the file to write to
@@ -18,11 +18,11 @@ def open_writer(file: str, text: str) -> None:
 
 def create_book() -> Book:
     """
-    this method creates a new book object.
+    this function creates a new book object.
 
     returns: a newly created book object
     """
-    print("Give me a book object:")
+    print("Give me a book object;")
 
     title = input("Enter a title in double quotations: ")
     author = input("Enter an author: ")
