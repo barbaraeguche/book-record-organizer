@@ -1,73 +1,81 @@
 
 class Book:
-    """Represents a Book with title, author, price, ISBN, genre, and year."""
+    """ this is the book class. it represents a book object with title, author, price, ISBN, genre, and year as attributes. """
+    
     def __init__(self, title: str = "", author: str = "", price: float = 0.0, isbn: str = "", genre: str = "", year: int = 0) -> None:
         """
-        This is the constructor for the Book class
-        :param title: title of the Book
-        :param author: author of the Book
-        :param price: price of the Book
-        :param isbn: isbn of the Book
-        :param genre: genre of the Book
-        :param year: publication year of the Book
+        this is the class constructor.
+
+        parameters:
+            title: title of the book
+            author: author of the book
+            price: price of the book
+            isbn: isbn of the book
+            genre: genre of the book
+            year: publication year of the book
+
+        returns: None
         """
-        self.title = title
-        self.author = author
-        self.setPrice(price)
-        self.setIsbn(isbn)
-        self.setGenre(genre)
-        self.setYear(year)
-    def __copy__(self) -> Book:
+        self.set_title(title)
+        self.set_author(author)
+        self.set_price(price)
+        self.set_isbn(isbn)
+        self.set_genre(genre)
+        self.set_year(year)
+    def __copy__(self) -> 'Book':
         """
-        This method creates a shallow copy of the Book object
-        :return: shallow copy of the Book object
+        this method creates a shallow copy of the Book object.
+
+        returns: a shallow copy of the Book object
         """
         return type(self)(self.title, self.author, self.price, self.isbn, self.genre, self.year)
 
     # accessor methods
-    def getTitle(self) -> str:
+    def get_title(self) -> str:
         return self.title
-    def getAuthor(self) -> str:
+    def get_author(self) -> str:
         return self.author
-    def getPrice(self) -> float:
+    def get_price(self) -> float:
         return self.price
-    def getIsbn(self) -> str:
+    def get_isbn(self) -> str:
         return self.isbn
-    def getGenre(self) -> str:
+    def get_genre(self) -> str:
         return self.genre
-    def getYear(self) -> int:
+    def get_year(self) -> int:
         return self.year
 
     # mutator methods
-    def setTitle(self, title: str) -> None:
+    def set_title(self, title: str) -> None:
         self.title = title
-    def setAuthor(self, author: str) -> None:
+    def set_author(self, author: str) -> None:
         self.author = author
-    def setPrice(self, price: float) -> None:
+    def set_price(self, price: float) -> None:
         self.price = price
-    def setIsbn(self, isbn: str) -> None:
+    def set_isbn(self, isbn: str) -> None:
         self.isbn = isbn
-    def setGenre(self, genre: str) -> None:
+    def set_genre(self, genre: str) -> None:
        self.genre = genre
-    def setYear(self, year: int) -> None:
+    def set_year(self, year: int) -> None:
         self.year = year
 
-    # equals
     def __eq__(self, obj) -> bool:
         """
-        This method checks if two Book objects are equal
-        :param obj: another object to compare
-        :return: True if equal, False otherwise
+        this method checks if two book objects are equal.
+
+        parameters:
+            obj: another object
+        
+        returns: true if equal, otherwise false
         """
         if not isinstance(obj, Book):
             return False
-        return self.title == obj.title and self.author == obj.author and self.price == obj.price and self.isbn == obj.isbn \
-            and self.genre == obj.genre and self.year == obj.year
-
-    # toString
+        return all(x == y for x, y in zip([self.title, self.author, self.price, self.isbn, self.genre, self.year], [obj.title, obj.author, obj.price, obj.isbn, obj.genre, obj.year]))
+    
     def __str__(self) -> str:
         """
-        This method returns the Book object as a string.
-        :return: string representation of the Book object
+        this method returns the Book object as a string.
+
+        returns: a string representation of the book object
         """
         return f"{self.title}, {self.author}, {self.price}, {self.isbn}, {self.genre}, {self.year}"
+    
