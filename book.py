@@ -16,12 +16,12 @@ class Book:
 
         returns: None
         """
-        self.set_title(title)
-        self.set_author(author)
-        self.set_price(price)
-        self.set_isbn(isbn)
-        self.set_genre(genre)
-        self.set_year(year)
+        self.title = title
+        self.author = author
+        self.price = price
+        self.isbn = isbn
+        self.genre = genre
+        self.year = year
     def __copy__(self) -> 'Book':
         """
         this method creates a shallow copy of the Book object.
