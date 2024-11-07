@@ -21,7 +21,7 @@ git clone https://github.com/barbaraeguche/book-record-organizer.git
 ```
 - **navigate to the project directory:**
 ```bash
-cd <project-directory>
+cd book-record-organizer
 ```
 - **run the project:**
 ```bash
