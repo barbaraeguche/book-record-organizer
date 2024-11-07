@@ -11,7 +11,21 @@ a circular linked list system designed to efficiently organize book records, fea
 - **commit changes:** saves the updated list to a file named `commit.txt` upon command.
 - **stop talking:** terminates the conversation and exits the program.
 
-## pictures 📸
+## running the project 🏁
+to get the project up and running on your local machine, follow these steps:
+
+- **ensure python is installed:** must have [python version ^3.11](https://www.python.org/downloads/) installed.
+- **clone the repository:** git clone <repository-url>
+- **navigate to the project directory:** cd <project-directory>
+- **run the project:** python3 driver.py
+
+
+(or the address shown in your console) to view the app.
+
+## gallery 📸
+<details>
+  <summary>showcase</summary>
+
   - **initial run**
   ![init](https://github.com/user-attachments/assets/d31b574d-8bb5-412b-b640-ec7dd6c0e5c9)
 
@@ -23,3 +37,4 @@ a circular linked list system designed to efficiently organize book records, fea
 
   - **option 5**
   ![option 5](https://github.com/user-attachments/assets/8ff2f821-db88-4d04-ba82-8a9be9a0a73c)
+</details>
