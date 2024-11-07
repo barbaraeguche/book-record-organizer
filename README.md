@@ -2,14 +2,14 @@
 a circular linked list system designed to efficiently organize book records, featuring invalid year filtering, record insertions, and cleanup capabilities.
 
 ## features 👾
-- year extraction: creates a `{year}.txt` file containing records based on a specified year.
-- record deletion: removes consecutive repeated records from the list to maintain data integrity.
-- author records: generates a new list that includes only the records from a specified author.
-- insertion before isbn: inserts a book object before a record with a given isbn number.
-- insertion between isbns: inserts a book object between two specified isbn numbers, provided both are found in the list.
-- isbn swaps: swaps the positions of two isbn numbers in the list if they exist.
-- commit changes: saves the updated list to a file named `commit.txt` upon command.
-- stop talking: terminates the conversation and exits the program.
+- **year extraction:** creates a `{year}.txt` file containing records based on a specified year.
+- **record deletion:** removes consecutive repeated records from the list to maintain data integrity.
+- **author records:** generates a new list that includes only the records from a specified author.
+- **insertion before isbn:** inserts a book object before a record with a given isbn number.
+- **insertion between isbns:** inserts a book object between two specified isbn numbers, provided both are found in the list.
+- **isbn swaps:** swaps the positions of two isbn numbers in the list if they exist.
+- **commit changes:** saves the updated list to a file named `commit.txt` upon command.
+- **stop talking:** terminates the conversation and exits the program.
 
 ## pictures 🖼️
   - initial run
