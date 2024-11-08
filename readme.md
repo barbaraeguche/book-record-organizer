@@ -1,4 +1,4 @@
-# dynamic book record organizer 📖
+# book record organizer 📖
 a circular linked list system designed to efficiently organize book records, featuring invalid year filtering, record insertions, and cleanup capabilities.
 
 ## features 👾
@@ -33,14 +33,14 @@ python3 driver.py
   <summary>showcase</summary>
 
   - **initial run**
-  ![init](https://github.com/user-attachments/assets/d31b574d-8bb5-412b-b640-ec7dd6c0e5c9)
+  ![init](https://github.com/user-attachments/assets/606431a7-8c27-47e3-aebb-95f7b88e7b30)
 
   - **option 2**
-  ![option 2](https://github.com/user-attachments/assets/951074f8-4a97-4449-ae8a-ff7e0c9396b4)
+  ![option 2](https://github.com/user-attachments/assets/356ddeaf-7a31-4aba-b1d4-1f2abea51312)
 
   - **option 3**
-  ![option 3](https://github.com/user-attachments/assets/bc4da696-b9d7-4d5d-bb3e-ba29998f5ce3)
+  ![option 3](https://github.com/user-attachments/assets/863fc0a0-ba9d-4c4c-9400-bac0d83d1cb2)
 
   - **option 5**
-  ![option 5](https://github.com/user-attachments/assets/8ff2f821-db88-4d04-ba82-8a9be9a0a73c)
+  ![option 5](https://github.com/user-attachments/assets/6f9764c9-b6a1-4094-9706-b8202cc28c17)
 </details>
